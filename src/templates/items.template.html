@@ -1,0 +1,20 @@
+<div class="container" style="margin-bottom: 5%;"> 
+  <div style="margin-top: 5%">
+    <h1>Menu of {{ itemsList.categoryName }}</h1>
+    <a style="color: rgb(255, 183, 27)" ui-sref="home">Home</a>
+    <span> < </span>
+    <a style="color: rgb(255, 183, 27)" ui-sref="categories">categories</a>
+    <span>< {{ itemsList.categoryName }}</span>
+  </div>
+
+  <ul style="margin-top: 5%">
+    <li
+      style="margin-top: 5%"
+      ng-repeat="item in itemsList.menuItem"
+    >
+      <h4> <span style="color:  rgb(255, 183, 27);">${{item.price_large}}</span> {{ item.name }}</h4>
+      <h5>{{item.description }}</h5>
+    </li>
+  </ul>
+  
+</div>

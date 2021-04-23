@@ -1,0 +1,19 @@
+<ul style="margin-top: 5%">
+  <li
+    style="margin-top: 5px"
+    ng-repeat="item in $ctrl.items"
+    ui-sref="items({categoryShortName: item.short_name})"
+  >
+    <span class="category">{{ item.name }}</span>
+  </li>
+</ul>
+
+<style>
+    .category{
+        font-weight: normal;
+        cursor: pointer;
+    }
+    .category:hover {
+        color: rgb(255, 183, 27);
+    }
+</style>
