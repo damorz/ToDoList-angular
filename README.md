@@ -1,2 +1,1 @@
-# Angular-practice-2
-practice angular that learn from coursera week4.
+Final result of angular todolist

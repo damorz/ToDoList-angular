@@ -1,25 +1,60 @@
 <!DOCTYPE html>
-<html ng-app="MenuApp">
+<html ng-app="TaskApp">
   <head>
     <meta charset="utf-8" />
+    <!-- include CSS file -->
     <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <title>Menu app</title>
+
+    <!-- Import Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js" integrity="sha512-MqEDqB7me8klOYxXXQlB4LaNf9V9S0+sG1i8LtPOYmHqICuEZ9ZLbyV3qIfADg2UJcLyCm4fawNiFvnYbcBJ1w==" crossorigin="anonymous"></script>
+    
+    <!-- Import font awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css"
+      integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni"
+      crossorigin="anonymous"
+    />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap" rel="stylesheet">
+    
+    <!-- Import google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+
+    <title>REMEMBY | Tasks management platform</title>
   </head>
-  <body style="background-color: rgb(37, 37, 37); color: white;">
-    <!-- <div class="tabs">
-      <a ui-sref="tab1" ui-sref-active="activeTab">Tab 1</a>
-      <a ui-sref="tab2" ui-sref-active="activeTab">Tab 2</a>
-      <button ui-sref="tab2">Tab 2</button>
-    </div> -->
-      <ui-view></ui-view>
+  <body style="background-color: white">
+    <div>
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo" ui-sref="task">
+          <img class="mx-auto d-block" src="./image/logo.svg" height="50" alt=""></img>
+          <h1 class="logoText">&nbsp;REMEMBY</h1>
+        </div>
+        <a ui-sref="task" ui-sref-active="active">Tasks to do</a>
+        <a ui-sref="history" ui-sref-active="active">End tasks</a>
+        <!-- <a ui-sref="calendar" ui-sref-active="active">Calendar</a> -->
+        <a ui-sref="about" ui-sref-active="active">About</a>
+      </div>
+      
+      <!-- Content -->
+      <div class="content" ng-controller="mainController">
+        <ui-view></ui-view>
+      </div>
+    </div>
 
     <!-- Libraries -->
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-ui-router.min.js"></script>
 
     <!-- Modules -->
-    <script src="src/modules/menuapp.module.js"></script>
+    <script src="src/modules/taskapp.module.js"></script>
     <script src="src/modules/data.module.js"></script>
 
     <!-- Routes -->
@@ -28,12 +63,92 @@
     <!-- Controller -->
     <script src="src/controllers/main-categories.controller.js"></script>
     <script src="src/controllers/items.controller.js"></script>
+    <script src="src/controllers/tasks.controller.js"></script>
+    <script src="src/controllers/history.controller.js"></script>
 
     <!-- Services -->
     <script src="src/services/menudata.service.js"></script>
+    <script src="src/services/task.service.js"></script>
 
     <!-- Components -->
     <script src="src/components/categories.component.js"></script>
-
   </body>
 </html>
+
+<script>
+  $("#calendar").evoCalendar();
+</script>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+  }
+
+  .logo {
+    padding: 30px 0 10px 0; 
+    cursor: pointer;
+  }
+
+  .logoText {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    color: white;
+  }
+
+  .sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: rgb(184, 45, 87);
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+  }
+
+  .sidebar a {
+    display: block;
+    font-weight: bolder;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+  }
+
+  .sidebar a.active {
+    background-color: white;
+    color: rgb(155, 23, 80);
+  }
+
+  .sidebar a:hover:not(.active) {
+    background-color:white;
+    color: rgb(155, 23, 80);
+  }
+
+  div.content {
+    margin-left: 200px;
+    /* padding: 1px 16px; */
+    /* height: 100%; */
+  }
+
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+    }
+    .sidebar a {
+      float: left;
+    }
+    div.content {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+</style>

@@ -1,5 +1,5 @@
 (function () {
-  angular.module("MenuApp").config(RoutesConfig);
+  angular.module("TaskApp").config(RoutesConfig);
 
   RoutesConfig.$inject = ["$stateProvider", "$urlRouterProvider"];
   function RoutesConfig($stateProvider, $urlRouterProvider) {
@@ -8,37 +8,21 @@
 
     // Set up UI states
     $stateProvider
-      .state("home", {
+      .state("task", {
         url: "/",
-        templateUrl: "src/templates/home.template.html",
+        templateUrl: "src/templates/task.template.html",
+        controller: "TaskController as taskCtrl",
       })
 
-      .state("categories", {
-        url: '/categories',
-        templateUrl:'src/templates/main-categories.template.html',
-        controller: 'MainCategoriesController as mainCategoriesList',
-        resolve: {
-          items: [
-            "MenuDataService",
-            function (MenuDataService) {
-              return MenuDataService.getAllCategories();
-            },
-          ],
-        },
+      .state("history", {
+        url: "/history",
+        templateUrl: "src/templates/history.template.html",
+        controller: "HistoryController as historyCtrl",
       })
 
-      .state("items", {
-        url: "/{categoryShortName}/items",
-        templateUrl: "src/templates/items.template.html",
-        controller: "ItemsController as itemsList",
-        resolve: {
-            items: [
-              "MenuDataService", "$stateParams",
-              function (MenuDataService, $stateParams) {
-                return MenuDataService.getItemsForCategory($stateParams.categoryShortName);
-              },
-            ],
-          },
-      });
+      .state("about", {
+        url: "/about",
+        templateUrl: "src/templates/about.template.html",
+      })
   }
 })();

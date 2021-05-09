@@ -1,0 +1,272 @@
+<div class="container">
+  <div class="col title-1">
+    <h1>TASKs TO DO</h1>
+    <span>&nbsp;&nbsp;Your tasks that you must to do.</span>
+  </div>
+  <div class="row" ng-if="taskCtrl.hasTask()">
+    <div  class="column-head col-4"><span style="margin-left: 30px;">Title</span></div>
+    <div class="col-4 text-center column-head">Due date</div>
+    <div class="col text-center column-head">Status </div>
+    <div class="col text-center column-head">Action</div>
+  </div>
+  <div class="row" style="color: rgb(160, 160, 160); padding: 10% 45%; font-size: 50px;" ng-if="!taskCtrl.hasTask()">
+    Empty
+  </div>
+  <div style="padding: 1% 0" ng-repeat="item in taskCtrl.tasks track by $index">
+    <div class="border-danger card w-100">
+      <div class="card-body">
+        <div class="row justify-content-md-center">
+          <div class="col-4">
+            <h5 class="card-title title-2">{{ item.title }}</h5>
+            <p class="card-text">
+              <span style="font-weight: bold;">Subject:</span> {{ item.subject }}
+            </p>
+            <p class="card-text">
+              <span style="font-weight: bold;">Description:</span> {{ item.description }}
+            </p>
+          </div>
+          <div class="col-4 text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+            <p class="card-text">
+              {{ taskCtrl.formatDate(item.dueDate) }}
+            </p>
+          </div>
+          <div class="col text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+            <p class="card-text" ng-style="{'color': item.status === 'late' ? 'rgb(242, 135, 12)': ''}">
+              <span style="font-weight: bold;">{{ item.status }}</span>
+            </p>
+          </div>
+          <div class="col text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+            <a ng-click="taskCtrl.finishTask(item)" class="btn btn-success">
+              <img class="mx-auto d-block" src="./image/check.svg" height="20" alt=""></img>
+            </a>
+    
+            <a style="margin-left: 5px;" ng-click="taskCtrl.deleteTask(item.id)" class="btn btn-danger">
+              <img class="mx-auto d-block" src="./image/trash.svg" height="20" alt=""></img>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addButton">
+    <a
+      type="button"
+      class="btn addTask"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      &nbsp;&nbsp;+&nbsp;&nbsp;
+    </a>
+  </div>
+
+  <div ng-if="taskCtrl.addSuccessEvent" id="addStatus">
+    <div class="status-tab">
+      Add task Success
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title title-2" id="exampleModalLabel">
+            Add new task
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form name="addTaskForm">
+            <div class="form-group">
+              <label class="title-2" for="exampleInputEmail1">Task title</label>
+              <input
+                name="taskTitle"
+                ng-model="taskCtrl.addTaskTitle"
+                required
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter task title"
+              />
+              <small
+                ng-if="addTaskForm.taskTitle.$error.required && addTaskForm.taskTitle.$touched"
+                id="emailHelp"
+                class="form-text error-text"
+                >Task title is required.</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="title-2" for="exampleInputEmail1">Subject</label>
+              <input
+                name="subject"
+                ng-model="taskCtrl.addSubject"
+                required
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="Enter Subject"
+              />
+              <small
+                ng-if="addTaskForm.subject.$error.required && addTaskForm.subject.$touched"
+                id="emailHelp"
+                class="form-text error-text"
+                >Subject is required.</small
+              >
+            </div>
+            <div class="form-group">
+              <label class="title-2" for="exampleInputPassword1"
+                >Description</label
+              >
+              <input
+                name="description"
+                ng-model="taskCtrl.addDescription"
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Enter Description"
+              />
+            </div>
+            <div class="form-group">
+              <label class="title-2" for="exampleInputPassword1"
+                >Due date</label
+              >
+              <input
+                name="dueDate"
+                ng-model="taskCtrl.addDueDate"
+                required
+                type="date"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Due data"
+              />
+              <small
+                ng-if="addTaskForm.addDueDate.$invalid && addTaskForm.addDueDate.$touched"
+                id="emailHelp"
+                class="form-text error-text"
+                >Due date must be assign.</small
+              >
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            ng-click="taskCtrl.addTask()"
+            ng-disabled="addTaskForm.$invalid"
+            type="submit"
+            class="btn submit-btn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Add task
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .submit-btn {
+    background-color: rgb(184,45,87);
+    color: white;
+  }
+
+  .submit-btn:hover {
+    font-weight: bold;
+    background-color: rgb(131, 31, 61);
+    color: white;
+  }
+
+  .title-1 {
+    padding: 5% 0;
+    font-weight: bolder;
+    color: rgb(155, 23, 80);
+  }
+
+  .title-2 {
+    font-weight: bolder;
+    color: rgb(155, 23, 80);
+  }
+
+  .form-group {
+    margin-top: 10px;
+  }
+
+  .error-text {
+    color: rgb(155, 23, 80);
+  }
+
+  .addTask {
+    background-color: rgb(155, 23, 80);
+    color: white;
+    font-size: 2em;
+    padding: 15px;
+    border-radius: 50px;
+    border-color: rgb(155, 23, 80);
+  }
+
+  .addTask:hover {
+    background-color: white;
+    color: rgb(155, 23, 80);
+  }
+
+  .status-tab {
+    text-align: center;
+    height: 30px;
+    padding: 20px 40px 50px 40px;
+    background-color: rgb(6, 168, 79);
+    opacity: 90%;
+    border-radius: 10px;
+    color: white;
+    font-weight: 200;
+    font-size: 1.5em;
+  }
+
+  .column-head {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  #addButton {
+    position: fixed;
+    bottom: 3%;
+    right: 3%;
+  }
+
+  #addStatus {
+    position: fixed;
+    top: 20px;
+    right: 40%;
+  }
+</style>

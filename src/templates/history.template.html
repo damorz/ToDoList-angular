@@ -1,0 +1,131 @@
+<div class="container">
+  <div class="col title-1">
+    <h1>All Task</h1>
+    <span>&nbsp;&nbsp;Your recent tasks.</span>
+  </div>
+  <div class="row" ng-if="historyCtrl.hasTask()">
+    <div  class="column-head col-4"><span style="margin-left: 30px;">Title</span></div>
+    <div class="col-4 text-center column-head">Due date</div>
+    <div class="col text-center column-head">Status </div>
+    <div class="col text-center column-head">Action</div>
+  </div>
+  <div class="row" style="color: rgb(160, 160, 160); padding: 10% 45%; font-size: 50px;" ng-if="!historyCtrl.hasTask()">
+    Empty
+  </div>
+  <div style="padding: 1% 0" ng-repeat="item in historyCtrl.allTask track by $index">
+    <div class="border-danger card w-100">
+      <div class="card-body">
+        <div class="row justify-content-md-center">
+          <div class="col-4">
+            <h5 class="card-title title-2">{{ item.title }}</h5>
+            <p class="card-text">
+              <span style="font-weight: bold;">Subject:</span> {{ item.subject }}
+            </p>
+            <p class="card-text">
+              <span style="font-weight: bold;">Description:</span> {{ item.description }}
+            </p>
+          </div>
+          <div class="col-4 text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+            <p class="card-text">
+              {{ historyCtrl.formatDate(item.dueDate) }}
+            </p>
+          </div>
+          <div class="col text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+            <p class="card-text" ng-style="{'color': item.status === 'late' ? 'rgb(242, 135, 12)': 'rgb(6, 168, 79)'}">
+              <span style="font-weight: bold;">{{ item.status }}</span>
+            </p>
+          </div>
+          <div class="col text-center">
+            <p  class="card-text">
+              &nbsp;
+            </p>
+    
+            <a style="margin-left: 5px;" ng-click="historyCtrl.deleteTask(item.id)" class="btn btn-danger">
+              <img class="mx-auto d-block" src="./image/trash.svg" height="20" alt=""></img>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<style>
+  .submit-btn {
+    background-color: rgb(184,45,87);
+    color: white;
+  }
+
+  .submit-btn:hover {
+    font-weight: bold;
+    background-color: rgb(131, 31, 61);
+    color: white;
+  }
+
+  .title-1 {
+    padding: 5% 0;
+    font-weight: bolder;
+    color: rgb(155, 23, 80);
+  }
+
+  .title-2 {
+    font-weight: bolder;
+    color: rgb(155, 23, 80);
+  }
+
+  .form-group {
+    margin-top: 10px;
+  }
+
+  .error-text {
+    color: rgb(155, 23, 80);
+  }
+
+  .addTask {
+    background-color: rgb(155, 23, 80);
+    color: white;
+    font-size: 2em;
+    padding: 15px;
+    border-radius: 50px;
+    border-color: rgb(155, 23, 80);
+  }
+
+  .addTask:hover {
+    background-color: white;
+    color: rgb(155, 23, 80);
+  }
+
+  .status-tab {
+    text-align: center;
+    height: 30px;
+    padding: 20px 40px 50px 40px;
+    background-color: rgb(6, 168, 79);
+    opacity: 90%;
+    border-radius: 10px;
+    color: white;
+    font-weight: 200;
+    font-size: 1.5em;
+  }
+
+  .column-head {
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  #addButton {
+    position: fixed;
+    bottom: 3%;
+    right: 3%;
+  }
+
+  #addStatus {
+    position: fixed;
+    top: 20px;
+    right: 40%;
+  }
+</style>
