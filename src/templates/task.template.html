@@ -48,6 +48,11 @@
             <a ng-click="taskCtrl.finishTask(item)" class="btn btn-success">
               <img class="mx-auto d-block" src="./image/check.svg" height="20" alt=""></img>
             </a>
+
+            <a ng-click="taskCtrl.preLoadToEdit(item)" class="btn btn-secondary" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+              <img class="mx-auto d-block" src="./image/edit.svg" height="20" alt=""></img>
+            </a>
     
             <a style="margin-left: 5px;" ng-click="taskCtrl.deleteTask(item.id)" class="btn btn-danger">
               <img class="mx-auto d-block" src="./image/trash.svg" height="20" alt=""></img>
@@ -71,7 +76,7 @@
 
   <div ng-if="taskCtrl.addSuccessEvent" id="addStatus">
     <div class="status-tab">
-      Add task Success
+      {{taskCtrl.fillDataStatus}} task Success
     </div>
   </div>
 
@@ -86,7 +91,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title title-2" id="exampleModalLabel">
-            Add new task
+            {{taskCtrl.fillDataStatus}} task
           </h5>
           <button
             type="button"
@@ -180,7 +185,7 @@
             Cancel
           </button>
           <button
-            ng-click="taskCtrl.addTask()"
+            ng-click="taskCtrl.confirmTask()"
             ng-disabled="addTaskForm.$invalid"
             type="submit"
             class="btn submit-btn"
@@ -188,7 +193,7 @@
             class="btn btn-primary"
             data-bs-dismiss="modal"
           >
-            Add task
+          Confirm
           </button>
         </div>
       </div>
