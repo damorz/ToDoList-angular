@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module("TaskApp", ["ui.router","data"])
+  angular.module("TaskApp", ["ui.router"])
   .controller("mainController", mainController);
 
   mainController.$inject = ['$scope','$location'];
